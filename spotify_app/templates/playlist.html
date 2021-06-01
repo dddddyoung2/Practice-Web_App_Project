@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block lead %}
+My Playlist 🎧
+{% endblock %}
+
+{% block lead %}
+나의 플레이리스트에 음악을 추가해보세요.
+{% endblock %}
+
+{% block main_body %}
+<form method="POST" action="/playlist">
+  <input name="artist_name" style="margin-bottom:10px" class="form-control" type="text" placeholder="가수 이름을 입력하세요 ex) BTS">
+  <input name="track_name" style="margin-bottom:10px" class="form-control" type="text" placeholder="곡명을 입력하세요 ex) Fire">
+  <input type="submit" class="btn btn-primary" value="Add" />
+</form>
+
+{% if user_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Artist</th>
+      <th scope="col">Song</th>
+      <th scope="col">Popularity🖤</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for playlist in playlist_list %}
+    <tr>
+      <th scope="row">{{ playlist.track_id }}</th>
+      <td>{{ playlist.artist_name }}</td>
+      <td>{{ playlist.track_name }}</td>
+      <td>
+        <a class="btn btn-secondary", href='/playlist/{{ playlist.track_id }}'>
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+<p></p>
+<p></p>
+<div style="border: 1px dotted; border-radius: 5px; padding: 10px;"> 🎧 My Playlist에 담긴 음악은 총 {{ totaltrack }}곡 입니다</div>
+
+{% endblock %}
